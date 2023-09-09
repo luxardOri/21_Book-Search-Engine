@@ -1,13 +1,21 @@
-const { Tech, Matchup } = require("../models");
+const { User } = require("../models");
 
 const resolvers = {
   Query: {
-    tech: async () => {},
-    matchups: async (parent, { _id }) => {},
+    me: async (parent, args, context) => {},
   },
   Mutation: {
-    createMatchup: async (parent, args) => {},
-    createVote: async (parent, { _id, techNum }) => {},
+    login: async (parent, args) => {},
+    addUser: async (parent, args) => {
+      const user = await User.create(args);
+      if (!user) {
+        return;
+      }
+      const token = signToken(user);
+      return { token, user };
+    },
+    saveBook: async (parent, args) => {},
+    removeBook: async (parent, args) => {},
   },
 };
 
